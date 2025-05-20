@@ -1,0 +1,101 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap');
+
+:root {
+  --voxel-bg: #1b1b1b;
+  --voxel-accent: #44ff44;
+  --voxel-dark: #101010;
+  --voxel-light: #88ff88;
+  --voxel-font: 'Press Start 2P', monospace;
+  --voxel-body-font: 'Share Tech Mono', monospace;
+  --voxel-texture: url('/img/pixel-bg-tile.png'); /* imagen tileada estilo voxel */
+}
+
+body {
+  background-color: var(--voxel-bg);
+  background-image: var(--voxel-texture);
+  background-size: 32px 32px;
+  color: var(--voxel-light);
+  font-family: var(--voxel-body-font);
+  margin: 0;
+  image-rendering: pixelated;
+}
+
+h1, h2, h3 {
+  font-family: var(--voxel-font);
+  color: var(--voxel-accent);
+  text-shadow: 2px 2px var(--voxel-dark);
+}
+
+.header, .footer {
+  background-color: var(--voxel-dark);
+  padding: 1rem;
+  border-top: 4px solid var(--voxel-accent);
+  border-bottom: 4px solid var(--voxel-accent);
+}
+
+.hero-image img, .screenshot-gallery img {
+  border: 4px solid var(--voxel-accent);
+  image-rendering: pixelated;
+  width: 100%;
+  max-width: 600px;
+  display: block;
+  margin: 1rem auto;
+}
+
+.neon-button {
+  font-family: var(--voxel-font);
+  font-size: 0.75rem;
+  color: var(--voxel-bg);
+  background-color: var(--voxel-accent);
+  padding: 0.75rem 1.5rem;
+  border: 2px solid var(--voxel-light);
+  border-radius: 0;
+  box-shadow: 4px 4px 0 var(--voxel-dark);
+  cursor: pointer;
+  transition: transform 0.1s steps(3);
+}
+
+.neon-button:hover {
+  transform: translateY(-2px);
+  background-color: var(--voxel-light);
+  color: var(--voxel-dark);
+}
+
+.section-fade {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.5s steps(4), transform 0.5s steps(4);
+}
+
+.footer {
+  background-image: url('/img/voxel-border.png'); /* opcional: borde decorativo */
+  background-repeat: repeat-x;
+}
+
+.link {
+  color: var(--voxel-accent);
+  text-decoration: underline;
+  font-family: var(--voxel-font);
+} 
+
+.container {
+  padding: 1rem 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+} 
+
+/* Opcional: estilo para cajas */
+.box {
+  border: 2px solid var(--voxel-accent);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: var(--voxel-dark);
+  box-shadow: 4px 4px 0 var(--voxel-bg);
+  font-family: var(--voxel-body-font);
+} 
+
+/* Asegura que el pixelado se respete en todas las imágenes */
+img {
+  image-rendering: pixelated;
+} 

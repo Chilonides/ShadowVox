@@ -1,575 +1,64 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NeoNova - Aventura Cósmica</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <style id="app-style">
-    /* ➊ Dark, natural voxel palette */
-    :root {
-      --voxel-bg: #1E1B18;        /* deep brown slate */
-      --voxel-dark: #0F0D0C;      /* almost black */
-      --voxel-accent: #6B8E23;    /* moss green */
-      --voxel-wood: #3B2F2F;      /* dark natural wood */
-      --voxel-texture: url('/path/to/your/subtle-pixel-texture.png');
-    }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voxel Game Showcase</title>
+  <link rel="stylesheet" href="styles.css">
 
-    /* ➋ Pixelated font for all text */
-    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
-    /* apply pixel font globally */
-    body, h1, h2, h3, h4, h5, h6, .game-title {
-      font-family: 'Share Tech Mono', monospace;
-    }
-
-    /* body text: clean, blocky, slightly pixelated */
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: var(--voxel-bg);
-      /* optional subtle tiled pixel texture */
-      background-image: var(--voxel-texture);
-      background-repeat: repeat;
-      color: var(--voxel-accent);
-      scroll-behavior: smooth;
-    }
-
-    /* ➋ Remove neon glow & animated gradients */
-    .neon-glow {
-      /* text-shadow: none; or a subtle 1px drop-shadow */
-      text-shadow: 1px 1px 0 var(--voxel-dark);
-    }
-
-    /* ➋ Hero: flat or subtly textured voxel look */
-    .animated-bg {
-      background-color: var(--voxel-pastel2);
-      /* if you have a light texture: use background-image here instead */
-      /* remove gradient animation */
-    }
-
-    .nav-link {
-      position: relative;
-    }
-    
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: -3px;
-      left: 0;
-      background-color: var(--voxel-accent);
-      transition: width 0.3s ease;
-    }
-    
-    .nav-link:hover::after, .nav-link.active::after {
-      width: 100%;
-    }
-    
-    .game-feature {
-      border-left: 3px solid var(--voxel-accent);
-      transition: transform 0.3s ease;
-    }
-    
-    .game-feature:hover {
-      transform: translateX(5px);
-    }
-    
-    .gallery-item {
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.2s ease; /* subtle */
-      /* add pixel border */
-      border: 4px solid var(--voxel-dark);
-    }
-    
-    .gallery-item:hover {
-      transform: scale(1.01);
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    
-    .gallery-item img {
-      transition: transform 0.5s ease;
-    }
-    
-    .gallery-item:hover img {
-      transform: scale(1.1);
-    }
-    
-    /* Scrollbar customization */
-    ::-webkit-scrollbar {
-      width: 10px;
-    }
-    
-    ::-webkit-scrollbar-track {
-      background: #0f0f1e;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-      background: #304060;
-      border-radius: 5px;
-    }
-    
-    ::-webkit-scrollbar-thumb:hover {
-      background: #0ff;
-    }
-    
-    .section-fade {
-      opacity: 0;
-      transform: scale(0.9);
-      transition: opacity 0.5s steps(4), transform 0.5s steps(4);
-    }
-    
-    .section-fade.visible {
-      opacity: 1;
-      transform: scale(1);
-    }
-    
-    /* ➍ Pixel border effect for images & cards */
-    .pixel-border {
-      border: 4px solid var(--voxel-dark);
-      /* ensure crisp edges */
-      image-rendering: pixelated;
-    }
-  </style>
+  <!-- Tipografía retro pixelada -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Header section -->
-  <header class="fixed w-full z-50 bg-[#0a0a1a] bg-opacity-80 backdrop-blur-md">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-      <div class="flex items-center">
-        <h1 class="game-title text-3xl font-bold text-cyan-400 neon-glow">NeoNova</h1>
-      </div>
-      <nav class="hidden md:block">
-        <ul class="flex space-x-8">
-          <li><a href="#home" class="nav-link text-white hover:text-cyan-400 transition-colors duration-300 font-medium">Inicio</a></li>
-          <li><a href="#screenshots" class="nav-link text-white hover:text-cyan-400 transition-colors duration-300 font-medium">Screenshots</a></li>
-          <li><a href="#description" class="nav-link text-white hover:text-cyan-400 transition-colors duration-300 font-medium">Descripción</a></li>
-          <li><a href="#contact" class="nav-link text-white hover:text-cyan-400 transition-colors duration-300 font-medium">Contacto</a></li>
-        </ul>
-      </nav>
-      <div class="md:hidden">
-        <button id="menu-toggle" class="text-white hover:text-cyan-400 transition-colors duration-300">
-          <i class="fas fa-bars text-xl"></i>
-        </button>
-      </div>
+
+  <!-- Encabezado -->
+  <div class="header">
+    <h1>Voxel Game Showcase</h1>
+  </div>
+
+  <!-- Imagen principal -->
+  <div class="container">
+    <div class="hero-image">
+      <img src="/img/portada.png" alt="Voxel Game Screenshot">
     </div>
-    <!-- Mobile menu -->
-    <div id="mobile-menu" class="hidden md:hidden bg-[#0a0a1a] bg-opacity-90 backdrop-blur-md">
-      <ul class="flex flex-col space-y-4 px-4 py-5">
-        <li><a href="#home" class="text-white hover:text-cyan-400 transition-colors duration-300 block py-2 font-medium">Inicio</a></li>
-        <li><a href="#screenshots" class="text-white hover:text-cyan-400 transition-colors duration-300 block py-2 font-medium">Screenshots</a></li>
-        <li><a href="#description" class="text-white hover:text-cyan-400 transition-colors duration-300 block py-2 font-medium">Descripción</a></li>
-        <li><a href="#contact" class="text-white hover:text-cyan-400 transition-colors duration-300 block py-2 font-medium">Contacto</a></li>
+
+    <!-- Sección: Qué es este juego -->
+    <div class="box">
+      <h2>¿Qué es este juego?</h2>
+      <p>
+        Este juego es una aventura voxel ambientada en un mundo cúbico generado por sistemas modulares.
+        Combina acción, exploración y enemigos controlados por una inteligencia artificial adaptable.
+      </p>
+    </div>
+
+    <!-- Sección: Características -->
+    <div class="box">
+      <h2>Características</h2>
+      <ul>
+        <li>Mundo completamente voxel basado en cubos</li>
+        <li>IA modular para enemigos diversos</li>
+        <li>Sistema de interacción con entornos (palancas, trampas)</li>
+        <li>Optimización sin uso de corutinas pesadas</li>
+        <li>Terreno interactivo y navegación con NavMesh</li>
       </ul>
     </div>
-  </header>
 
-  <!-- Hero section -->
-  <section id="home" class="min-h-screen flex items-center pt-20 animated-bg">
-    <div class="container mx-auto px-4 py-16 flex flex-col md:flex-row items-center">
-      <div class="md:w-1/2 mb-10 md:mb-0">
-        <h2 class="text-5xl md:text-6xl font-bold mb-6 leading-tight text-white">
-          <span class="text-cyan-400 neon-glow">NeoNova:</span> Aventura Cósmica
-        </h2>
-        <p class="text-xl text-gray-300 mb-8">Explora los confines del universo en una aventura épica de exploración espacial, combate y descubrimiento.</p>
-        <div class="flex flex-wrap gap-4">
-          <a href="#screenshots" class="neon-button bg-gradient-to-r from-cyan-600 to-blue-700 text-white font-bold py-3 px-8 rounded-lg hover:from-cyan-500 hover:to-blue-600 transition-all duration-300">
-            Ver Screenshots
-          </a>
-          <a href="#description" class="neon-button bg-transparent border-2 border-cyan-400 text-cyan-400 font-bold py-3 px-8 rounded-lg hover:bg-cyan-400/10 transition-all duration-300">
-            Conoce Más
-          </a>
-        </div>
-      </div>
-      <div class="md:w-1/2">
-        <img src="https://cdn.pixabay.com/photo/2017/08/29/12/07/adult-2693054_1280.jpg" alt="NeoNova Game Hero" class="rounded-xl shadow-2xl shadow-cyan-500/20 w-full object-cover aspect-video">
-      </div>
+    <!-- Galería de pantallas -->
+    <div class="screenshot-gallery">
+      <img src="/img/level1.png" alt="Nivel 1">
+      <img src="/img/level2.png" alt="Nivel 2">
     </div>
-    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-      <a href="#screenshots" class="text-white">
-        <i class="fas fa-chevron-down text-2xl"></i>
-      </a>
-    </div>
-  </section>
 
-  <!-- Screenshots section -->
-  <section id="screenshots" class="py-20 bg-[#0a0a1a]">
-    <div class="container mx-auto px-4 section-fade">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl font-bold mb-4 text-white">Screenshots del Juego</h2>
-        <div class="w-20 h-1 bg-cyan-400 mx-auto mb-6"></div>
-        <p class="text-xl text-gray-300 max-w-3xl mx-auto">Explora los impresionantes escenarios, personajes y batallas épicas que te esperan en NeoNova.</p>
-      </div>
-      
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="gallery-item rounded-xl overflow-hidden pixel-border">
-          <a href="https://cdn.pixabay.com/photo/2023/01/23/09/26/ai-generated-7738141_1280.jpg" data-fancybox="gallery" data-caption="Exploración planetaria">
-            <img src="https://cdn.pixabay.com/photo/2023/01/23/09/26/ai-generated-7738141_1280.jpg" alt="Exploración planetaria" class="w-full h-64 object-cover pixel-border">
-          </a>
-          <div class="p-4 bg-gray-900 bg-opacity-80">
-            <h3 class="text-lg font-medium text-cyan-400">Exploración planetaria</h3>
-          </div>
-        </div>
-        
-        <div class="gallery-item rounded-xl overflow-hidden pixel-border">
-          <a href="https://cdn.pixabay.com/photo/2018/05/14/16/54/cyber-3400789_1280.jpg" data-fancybox="gallery" data-caption="Combate espacial">
-            <img src="https://cdn.pixabay.com/photo/2018/05/14/16/54/cyber-3400789_1280.jpg" alt="Combate espacial" class="w-full h-64 object-cover pixel-border">
-          </a>
-          <div class="p-4 bg-gray-900 bg-opacity-80">
-            <h3 class="text-lg font-medium text-cyan-400">Combate espacial</h3>
-          </div>
-        </div>
-        
-        <div class="gallery-item rounded-xl overflow-hidden pixel-border">
-          <a href="https://cdn.pixabay.com/photo/2017/08/01/14/42/knight-2565957_1280.jpg" data-fancybox="gallery" data-caption="Personajes principales">
-            <img src="https://cdn.pixabay.com/photo/2017/08/01/14/42/knight-2565957_1280.jpg" alt="Personajes principales" class="w-full h-64 object-cover pixel-border">
-          </a>
-          <div class="p-4 bg-gray-900 bg-opacity-80">
-            <h3 class="text-lg font-medium text-cyan-400">Personajes principales</h3>
-          </div>
-        </div>
-        
-        <div class="gallery-item rounded-xl overflow-hidden pixel-border">
-          <a href="https://cdn.pixabay.com/photo/2021/01/05/06/40/alien-planet-5889588_1280.jpg" data-fancybox="gallery" data-caption="Paisaje alienígena">
-            <img src="https://cdn.pixabay.com/photo/2021/01/05/06/40/alien-planet-5889588_1280.jpg" alt="Paisaje alienígena" class="w-full h-64 object-cover pixel-border">
-          </a>
-          <div class="p-4 bg-gray-900 bg-opacity-80">
-            <h3 class="text-lg font-medium text-cyan-400">Paisaje alienígena</h3>
-          </div>
-        </div>
-        
-        <div class="gallery-item rounded-xl overflow-hidden pixel-border">
-          <a href="https://cdn.pixabay.com/photo/2023/05/22/10/51/ai-generated-8010765_1280.jpg" data-fancybox="gallery" data-caption="Tecnología futurista">
-            <img src="https://cdn.pixabay.com/photo/2023/05/22/10/51/ai-generated-8010765_1280.jpg" alt="Tecnología futurista" class="w-full h-64 object-cover pixel-border">
-          </a>
-          <div class="p-4 bg-gray-900 bg-opacity-80">
-            <h3 class="text-lg font-medium text-cyan-400">Tecnología futurista</h3>
-          </div>
-        </div>
-        
-        <div class="gallery-item rounded-xl overflow-hidden pixel-border">
-          <a href="https://cdn.pixabay.com/photo/2023/06/02/14/10/ai-generated-8035458_1280.jpg" data-fancybox="gallery" data-caption="Estación espacial">
-            <img src="https://cdn.pixabay.com/photo/2023/06/02/14/10/ai-generated-8035458_1280.jpg" alt="Estación espacial" class="w-full h-64 object-cover pixel-border">
-          </a>
-          <div class="p-4 bg-gray-900 bg-opacity-80">
-            <h3 class="text-lg font-medium text-cyan-400">Estación espacial</h3>
-          </div>
-        </div>
-      </div>
+    <!-- Botón de descarga -->
+    <div class="button-container">
+      <a href="/demo/descargar" class="neon-button">Descargar Demo</a>
     </div>
-  </section>
+  </div>
 
-  <!-- Description section -->
-  <section id="description" class="py-20 bg-gradient-to-b from-[#0a0a1a] to-[#101035]">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-16 section-fade">
-        <h2 class="text-4xl font-bold mb-4 text-white">Descripción del Juego</h2>
-        <div class="w-20 h-1 bg-cyan-400 mx-auto mb-6"></div>
-        <p class="text-xl text-gray-300 max-w-3xl mx-auto">Sumérgete en el universo de NeoNova, donde cada decisión altera el curso de la galaxia.</p>
-      </div>
-      
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-        <!-- Technical Information -->
-        <div class="bg-[#0f1428] p-8 rounded-xl shadow-lg hover:shadow-cyan-500/10 transition-shadow duration-300 section-fade">
-          <div class="flex items-center mb-5">
-            <div class="w-12 h-12 rounded-full bg-cyan-900 flex items-center justify-center mr-4">
-              <i class="fas fa-microchip text-cyan-400 text-xl"></i>
-            </div>
-            <h3 class="text-2xl font-bold text-white">Información Técnica</h3>
-          </div>
-          <ul class="space-y-4">
-            <li class="game-feature pl-4">
-              <span class="block text-cyan-400 font-medium">Plataformas:</span>
-              <span class="text-gray-300">PC, PlayStation 5, Xbox Series X/S</span>
-            </li>
-            <li class="game-feature pl-4">
-              <span class="block text-cyan-400 font-medium">Motor Gráfico:</span>
-              <span class="text-gray-300">Unreal Engine 5</span>
-            </li>
-            <li class="game-feature pl-4">
-              <span class="block text-cyan-400 font-medium">Género:</span>
-              <span class="text-gray-300">Aventura espacial, RPG, Acción</span>
-            </li>
-            <li class="game-feature pl-4">
-              <span class="block text-cyan-400 font-medium">Requisitos Recomendados:</span>
-              <span class="text-gray-300">Intel i7 / AMD Ryzen 7, 16GB RAM, RTX 3070</span>
-            </li>
-            <li class="game-feature pl-4">
-              <span class="block text-cyan-400 font-medium">Lanzamiento:</span>
-              <span class="text-gray-300">Octubre 2025</span>
-            </li>
-          </ul>
-        </div>
-        
-        <!-- Story and Features -->
-        <div class="bg-[#0f1428] p-8 rounded-xl shadow-lg hover:shadow-cyan-500/10 transition-shadow duration-300 section-fade">
-          <div class="flex items-center mb-5">
-            <div class="w-12 h-12 rounded-full bg-cyan-900 flex items-center justify-center mr-4">
-              <i class="fas fa-book-open text-cyan-400 text-xl"></i>
-            </div>
-            <h3 class="text-2xl font-bold text-white">Historia y Características</h3>
-          </div>
-          <p class="text-gray-300 mb-5">Ambientado en el año 3450, NeoNova te pone en la piel de Aria Nova, una exploradora espacial con habilidades especiales que la conectan con una antigua civilización cósmica.</p>
-          <p class="text-gray-300 mb-5">Tras el descubrimiento de una tecnología alienígena en los confines de la galaxia, la humanidad se enfrenta a una amenaza existencial que solo tú puedes detener.</p>
-          <ul class="space-y-4 mt-6">
-            <li class="game-feature pl-4">
-              <span class="text-gray-300">Mundo abierto con 7 sistemas planetarios completamente explorables</span>
-            </li>
-            <li class="game-feature pl-4">
-              <span class="text-gray-300">Sistema de combate dinámico con más de 30 armas y habilidades</span>
-            </li>
-            <li class="game-feature pl-4">
-              <span class="text-gray-300">Toma de decisiones con impacto en la narrativa y múltiples finales</span>
-            </li>
-          </ul>
-        </div>
-        
-        <!-- Gameplay and Graphics -->
-        <div class="bg-[#0f1428] p-8 rounded-xl shadow-lg hover:shadow-cyan-500/10 transition-shadow duration-300 section-fade">
-          <div class="flex items-center mb-5">
-            <div class="w-12 h-12 rounded-full bg-cyan-900 flex items-center justify-center mr-4">
-              <i class="fas fa-gamepad text-cyan-400 text-xl"></i>
-            </div>
-            <h3 class="text-2xl font-bold text-white">Gameplay y Gráficos</h3>
-          </div>
-          <p class="text-gray-300 mb-5">NeoNova ofrece una libertad sin precedentes, combinando exploración espacial, combate táctico y narrativa inmersiva en una experiencia única.</p>
-          <ul class="space-y-4">
-            <li class="game-feature pl-4">
-              <span class="block text-cyan-400 font-medium">Sistema de vuelo espacial:</span>
-              <span class="text-gray-300">Control total de tu nave con física realista y combate tridimensional</span>
-            </li>
-            <li class="game-feature pl-4">
-              <span class="block text-cyan-400 font-medium">Personalización:</span>
-              <span class="text-gray-300">Más de 200 opciones para personalizar tu personaje, nave y equipamiento</span>
-            </li>
-            <li class="game-feature pl-4">
-              <span class="block text-cyan-400 font-medium">Gráficos de última generación:</span>
-              <span class="text-gray-300">Tecnología de iluminación avanzada, texturas fotorrealistas y efectos volumétricos</span>
-            </li>
-            <li class="game-feature pl-4">
-              <span class="block text-cyan-400 font-medium">Audio inmersivo:</span>
-              <span class="text-gray-300">Sonido 3D adaptativo y banda sonora dinámica que evoluciona con tus acciones</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Pie de página -->
+  <div class="footer">
+    <p>&copy; 2025 Voxel Studios. Todos los derechos reservados.</p>
+  </div>
 
-  <!-- Contact section -->
-  <section id="contact" class="py-20 bg-[#101035]">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-16 section-fade">
-        <h2 class="text-4xl font-bold mb-4 text-white">Contacto</h2>
-        <div class="w-20 h-1 bg-cyan-400 mx-auto mb-6"></div>
-        <p class="text-xl text-gray-300 max-w-3xl mx-auto">¿Tienes alguna pregunta sobre NeoNova? ¡Estamos aquí para ayudarte!</p>
-      </div>
-      
-      <div class="max-w-3xl mx-auto">
-        <div id="contact-form" class="bg-[#0f1428] p-8 rounded-xl shadow-lg hover:shadow-cyan-500/10 transition-shadow duration-300 section-fade">
-          <form id="neonova-contact-form">
-            <div class="mb-6">
-              <label for="name" class="block text-cyan-400 mb-2 font-medium">Nombre</label>
-              <input type="text" id="name" name="name" class="w-full bg-[#0a0a1a] border border-gray-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-cyan-400 transition-colors duration-300" placeholder="Tu nombre" required>
-            </div>
-            
-            <div class="mb-6">
-              <label for="email" class="block text-cyan-400 mb-2 font-medium">Correo electrónico</label>
-              <input type="email" id="email" name="email" class="w-full bg-[#0a0a1a] border border-gray-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-cyan-400 transition-colors duration-300" placeholder="tu@email.com" required>
-            </div>
-            
-            <div class="mb-6">
-              <label for="message" class="block text-cyan-400 mb-2 font-medium">Mensaje</label>
-              <textarea id="message" name="message" rows="5" class="w-full bg-[#0a0a1a] border border-gray-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-cyan-400 transition-colors duration-300" placeholder="Escribe tu mensaje aquí..." required></textarea>
-            </div>
-            
-            <div class="flex justify-center">
-              <button type="submit" class="neon-button bg-gradient-to-r from-cyan-600 to-blue-700 text-white font-bold py-3 px-8 rounded-lg hover:from-cyan-500 hover:to-blue-600 transition-all duration-300">
-                Enviar Mensaje
-              </button>
-            </div>
-          </form>
-        </div>
-        
-        <div id="thank-you-message" class="hidden bg-[#0f1428] p-8 rounded-xl shadow-lg text-center section-fade">
-          <div class="text-5xl text-cyan-400 mb-6">
-            <i class="fas fa-check-circle"></i>
-          </div>
-          <h3 class="text-2xl font-bold text-white mb-4">¡Gracias por contactarnos!</h3>
-          <p class="text-gray-300 mb-6">Hemos recibido tu mensaje. Nuestro equipo se pondrá en contacto contigo a la brevedad posible.</p>
-          <button id="send-another" class="mt-4 neon-button bg-transparent border-2 border-cyan-400 text-cyan-400 font-bold py-2 px-6 rounded-lg hover:bg-cyan-400/10 transition-all duration-300">
-            Enviar otro mensaje
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-[#0a0a1a] py-10">
-    <div class="container mx-auto px-4">
-      <div class="flex flex-col md:flex-row justify-between items-center">
-        <div class="mb-6 md:mb-0">
-          <h2 class="game-title text-2xl font-bold text-cyan-400 neon-glow">NeoNova</h2>
-          <p class="text-gray-400 mt-2">© 2025 SpaceVenture Studios. Todos los derechos reservados.</p>
-        </div>
-        <div class="flex space-x-6">
-          <a href="javascript:void(0)" class="text-gray-400 hover:text-cyan-400 transition-colors duration-300">
-            <i class="fab fa-twitter text-xl"></i>
-          </a>
-          <a href="javascript:void(0)" class="text-gray-400 hover:text-cyan-400 transition-colors duration-300">
-            <i class="fab fa-facebook text-xl"></i>
-          </a>
-          <a href="javascript:void(0)" class="text-gray-400 hover:text-cyan-400 transition-colors duration-300">
-            <i class="fab fa-instagram text-xl"></i>
-          </a>
-          <a href="javascript:void(0)" class="text-gray-400 hover:text-cyan-400 transition-colors duration-300">
-            <i class="fab fa-discord text-xl"></i>
-          </a>
-          <a href="javascript:void(0)" class="text-gray-400 hover:text-cyan-400 transition-colors duration-300">
-            <i class="fab fa-youtube text-xl"></i>
-          </a>
-        </div>
-      </div>
-      <div class="mt-8 pt-8 border-t border-gray-800 text-center">
-        <p class="text-gray-500">Desarrollado con <i class="fas fa-heart text-red-500"></i> para los amantes de los videojuegos</p>
-      </div>
-    </div>
-  </footer>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
-  <script id="app-script">
-    $(document).ready(function() {
-      // Mobile menu toggle
-      $('#menu-toggle').click(function() {
-        $('#mobile-menu').slideToggle(300);
-      });
-      
-      // Close mobile menu on link click
-      $('#mobile-menu a').click(function() {
-        $('#mobile-menu').slideUp(300);
-      });
-      
-      // Smooth scrolling for anchor links
-      $('a[href^="#"]').on('click', function(e) {
-        e.preventDefault();
-        
-        var target = this.hash;
-        var $target = $(target);
-        
-        $('html, body').animate({
-          'scrollTop': $target.offset().top - 80
-        }, 800, 'swing');
-      });
-      
-      // Initialize Fancybox
-      Fancybox.bind("[data-fancybox]", {
-        // Options for Fancybox gallery
-        Toolbar: {
-          display: [
-            { id: "prev", position: "center" },
-            { id: "counter", position: "center" },
-            { id: "next", position: "center" },
-            "zoom",
-            "slideshow",
-            "fullscreen",
-            "download",
-            "close",
-          ],
-        },
-        on: {
-          reveal: (fancybox, slide) => {
-            // add pixel border around modal image
-            slide.$content.classList.add('pixel-border');
-          }
-        }
-      });
-      
-      // Form validation and submission
-      $('#neonova-contact-form').submit(function(e) {
-        e.preventDefault();
-        
-        // Validate fields
-        var name = $('#name').val();
-        var email = $('#email').val();
-        var message = $('#message').val();
-        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        
-        if (!name || !email || !message) {
-          alert('Por favor, completa todos los campos del formulario.');
-          return;
-        }
-        
-        if (!emailRegex.test(email)) {
-          alert('Por favor, ingresa un correo electrónico válido.');
-          return;
-        }
-        
-        // Store submission in localStorage
-        localStorage.setItem('contactSubmitted', 'true');
-        localStorage.setItem('contactName', name);
-        localStorage.setItem('contactEmail', email);
-        
-        // Show thank you message
-        $('#contact-form').fadeOut(300, function() {
-          $('#thank-you-message').fadeIn(300);
-        });
-      });
-      
-      // Send another message button
-      $('#send-another').click(function() {
-        $('#thank-you-message').fadeOut(300, function() {
-          // Reset form
-          $('#neonova-contact-form')[0].reset();
-          $('#contact-form').fadeIn(300);
-        });
-      });
-      
-      // Check if form was previously submitted
-      if (localStorage.getItem('contactSubmitted') === 'true') {
-        $('#contact-form').hide();
-        $('#thank-you-message').show();
-      }
-      
-      // Scroll animation for sections
-      function checkVisibility() {
-        $('.section-fade').each(function() {
-          var elementTop = $(this).offset().top;
-          var elementHeight = $(this).outerHeight();
-          var windowHeight = $(window).height();
-          var scrollPosition = $(window).scrollTop();
-          
-          if (scrollPosition > elementTop - windowHeight + elementHeight / 3) {
-            $(this).addClass('visible');
-          }
-        });
-      }
-      
-      // Initial check
-      checkVisibility();
-      
-      // Check on scroll
-      $(window).scroll(function() {
-        checkVisibility();
-      });
-      
-      // Highlight active nav item based on scroll position
-      $(window).scroll(function() {
-        var scrollDistance = $(window).scrollTop();
-        
-        // Assign active class to nav links based on the scroll position
-        $('section').each(function(i) {
-          if ($(this).position().top - 100 <= scrollDistance) {
-            $('.nav-link.active').removeClass('active');
-            $('.nav-link').eq(i).addClass('active');
-          }
-        });
-      }).scroll();
-    });
-  </script>
 </body>
 </html>
