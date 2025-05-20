@@ -1,64 +1,321 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Voxel Game Showcase</title>
-  <link rel="stylesheet" href="styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shadow Vox: Lost Soul - Juego Voxel Medieval</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <style>
+      body {
+        background-color: #0f0f0f;
+        color: #f0f0f0;
+      }
+      
+      .mobile-menu-button {
+        display: none;
+        font-size: 1.8rem;
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+      }
 
-  <!-- Tipografía retro pixelada -->
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-</head>
-<body>
+      .side-menu {
+        position: fixed;
+        top: 0;
+        right: -300px;
+        width: 300px;
+        height: 100vh;
+        background-color: rgba(26, 26, 26, 0.98);
+        transition: 0.3s;
+        z-index: 1000;
+        padding: 3rem 1.5rem;
+        backdrop-filter: blur(10px);
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+      }
 
-  <!-- Encabezado -->
-  <div class="header">
-    <h1>Voxel Game Showcase</h1>
-  </div>
+      .side-menu::before {
+        content: "MENU";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 4rem;
+        opacity: 0.1;
+        pointer-events: none;
+      }
 
-  <!-- Imagen principal -->
-  <div class="container">
-    <div class="hero-image">
-      <img src="/img/portada.png" alt="Voxel Game Screenshot">
-    </div>
+      .side-menu ul {
+        margin-top: 3rem;
+      }
 
-    <!-- Sección: Qué es este juego -->
-    <div class="box">
-      <h2>¿Qué es este juego?</h2>
-      <p>
-        Este juego es una aventura voxel ambientada en un mundo cúbico generado por sistemas modulares.
-        Combina acción, exploración y enemigos controlados por una inteligencia artificial adaptable.
-      </p>
-    </div>
+      .side-menu ul li a {
+        display: block;
+        padding: 1rem;
+        color: white;
+        text-decoration: none;
+        font-size: 1.2rem;
+        transition: 0.3s;
+        border-left: 3px solid transparent;
+      }
 
-    <!-- Sección: Características -->
-    <div class="box">
-      <h2>Características</h2>
+      .side-menu ul li a:hover {
+        border-left: 3px solid white;
+        background-color: rgba(255, 255, 255, 0.1);
+        padding-left: 1.5rem;
+      }
+
+      .side-menu.active {
+        right: 0;
+      }
+
+      .side-menu .close-button {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+      header, section {
+        padding: 2rem 0;
+      }
+      .hero {
+        background: url('https://images.unsplash.com/photo-1616266552022-fd1fc9fcb2d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+        color: white;
+        text-align: center;
+        padding: 4rem 1rem;
+        border-radius: 0.5rem;
+        min-height: 60vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .gallery {
+        gap: 1rem;
+      }
+      .gallery img {
+        border-radius: 8px;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        aspect-ratio: 16/9;
+      }
+      footer {
+        margin-top: 2rem;
+        text-align: center;
+        padding: 1rem;
+      }
+      .social-icons {
+        margin: 1.5rem 0;
+      }
+      
+      .social-icons a {
+        margin: 0 0.8rem;
+        font-size: 1.8rem;
+        color: #f0f0f0;
+        transition: 0.3s;
+        display: inline-block;
+      }
+      
+      .social-icons a:hover {
+        color: #4a9eff;
+        transform: translateY(-3px) scale(1.1);
+      }
+
+      .social-icons .fab {
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+      }
+      
+      /* Responsividad */
+      #inicio {
+        background-image: url('images/hero-bg.jpg');
+      }
+
+      #galeria {
+        background-image: url('images/gallery-bg.jpg');
+      }
+
+      #descripcion {
+        background-image: url('images/desc-bg.jpg');
+      }
+
+      #contacto {
+        background-image: url('images/contact-bg.jpg');
+      }
+
+      section {
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+      }
+
+      @media (max-width: 768px) {
+        .desktop-menu {
+          display: none;
+        }
+        .mobile-menu-button {
+          display: block;
+        }
+        nav ul {
+          padding: 0;
+        }
+        nav ul li {
+          margin: 0.5rem 0;
+        }
+        .hero {
+          padding: 3rem 1rem;
+          min-height: 40vh;
+        }
+        .hero h1 {
+          font-size: 2rem;
+        }
+        .gallery {
+          grid-template-columns: 1fr;
+        }
+        form {
+          grid-template-columns: 1fr !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        nav {
+          padding: 1rem;
+        }
+        nav ul {
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+        section {
+          padding: 1rem 0;
+        }
+        .hero h1 {
+          font-size: 1.75rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="container-fluid">
       <ul>
-        <li>Mundo completamente voxel basado en cubos</li>
-        <li>IA modular para enemigos diversos</li>
-        <li>Sistema de interacción con entornos (palancas, trampas)</li>
-        <li>Optimización sin uso de corutinas pesadas</li>
-        <li>Terreno interactivo y navegación con NavMesh</li>
+        <li><strong>Shadow Vox: Lost Soul</strong></li>
+      </ul>
+      <ul class="desktop-menu">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#galeria">Galería</a></li>
+        <li><a href="#descripcion">Descripción del juego</a></li>
+        <li><a href="#contacto" role="button">Contacto</a></li>
+      </ul>
+      <button class="mobile-menu-button">☰</button>
+    </nav>
+
+    <div class="side-menu">
+      <button class="close-button">×</button>
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#galeria">Galería</a></li>
+        <li><a href="#descripcion">Descripción del juego</a></li>
+        <li><a href="#contacto">Contacto</a></li>
       </ul>
     </div>
 
-    <!-- Galería de pantallas -->
-    <div class="screenshot-gallery">
-      <img src="/img/level1.png" alt="Nivel 1">
-      <img src="/img/level2.png" alt="Nivel 2">
-    </div>
+    <main class="container">
+      <section id="inicio" class="hero">
+        <h1>Shadow Vox: Lost Soul</h1>
+        <p>Una aventura de rol medieval voxel en un mundo de almas condenadas y oscuridad pixelada.</p>
+      </section>
 
-    <!-- Botón de descarga -->
-    <div class="button-container">
-      <a href="/demo/descargar" class="neon-button">Descargar Demo</a>
-    </div>
-  </div>
+      <section id="galeria">
+        <hgroup>
+          <h2>Galería</h2>
+          <h3>Arte del juego y capturas de pantalla</h3>
+        </hgroup>
+        <div class="grid gallery">
+          <img src="https://images.unsplash.com/photo-1622437119752-45051d0c19d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Modelo de personaje voxel medieval">
+          <img src="https://images.unsplash.com/photo-1617142834085-4c5a3adf4ba1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Captura de escenario voxel">
+          <img src="https://images.unsplash.com/photo-1609582680875-6d8e23c95b45?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Arte conceptual de ambiente voxel">
+        </div>
+      </section>
 
-  <!-- Pie de página -->
-  <div class="footer">
-    <p>&copy; 2025 Voxel Studios. Todos los derechos reservados.</p>
-  </div>
+      <section id="descripcion">
+        <hgroup>
+          <h2>Descripción del Juego</h2>
+          <h3>Detalles técnicos, historia y gameplay</h3>
+        </hgroup>
+        <h3>Requisitos del Sistema</h3>
+        <p>
+          Sistema operativo: Windows 10 64-bit<br>
+          Procesador: Intel i5 2.5GHz o equivalente<br>
+          Memoria RAM: 8 GB<br>
+          Gráficos: NVIDIA GTX 960 / AMD Radeon R9 280<br>
+          Almacenamiento: 10 GB disponibles
+        </p>
+        <h3>Historia</h3>
+        <p>
+          En un reino olvidado, las almas de antiguos guerreros y magos vagan condenadas. Tú eres un cazador de espectros destinado a romper el ciclo eterno en un mundo voxel lleno de misterios, ruinas y oscuridad.
+        </p>
+        <h3>Características del Juego</h3>
+        <p>
+          - Mundo abierto voxel<br>
+          - Sistema de combate táctico<br>
+          - Niveles generados proceduralmente<br>
+          - Personalización de personajes<br>
+          - Banda sonora atmosférica original
+        </p>
+        <h3>Gameplay y Gráficos</h3>
+        <p>
+          El juego combina exploración libre con combates intensos contra entidades espectrales. Los gráficos voxel con iluminación dinámica sumergen al jugador en una experiencia retro y moderna a la vez.
+        </p>
+      </section>
 
-</body>
+      <section id="contacto" aria-label="Contacto">
+        <div class="container">
+          <article>
+            <hgroup>
+              <h2>Contacto</h2>
+              <h3>¿Tienes preguntas o deseas colaborar con nosotros?</h3>
+            </hgroup>
+            <form>
+              <div class="grid">
+                <div>
+                  <label for="firstname">Nombre</label>
+                  <input type="text" id="firstname" name="firstname" placeholder="Tu nombre" required />
+                </div>
+                <div>
+                  <label for="email">Correo electrónico</label>
+                  <input type="email" id="email" name="email" placeholder="Tu correo electrónico" required />
+                </div>
+              </div>
+              <div style="margin-top: 1rem;">
+                <label for="mensaje">Mensaje</label>
+                <textarea id="mensaje" name="mensaje" placeholder="Escribe tu mensaje aquí..." rows="5" required></textarea>
+              </div>
+              <button type="submit" onclick="event.preventDefault()" style="margin-top: 1rem;">Enviar</button>
+            </form>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="container">
+      <small>
+        Condemned Souls © 2025. Todos los derechos reservados.
+        <div class="social-icons">
+          <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+          <a href="https://twitter.com" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://youtube.com" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="https://discord.com" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
+        </div>
+        <p>Desarrollado con ❤️ para los amantes de los videojuegos.</p>
+      </small>
+    </footer>
+    <script src="script.js"></script>
+  </body>
 </html>
